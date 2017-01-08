@@ -3,51 +3,28 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 from lsh import *
+import time
 
 dataSet = "1000histograms.asc"
 
-def getDistance(p1, p2):
-	distance = 0
-	for i in range(0, len(p1)):
-		distance += abs(p1[i] - p2[i]) ** 2
-	
-	return math.sqrt(distance)
+def getDistanceL2(p1, p2):
+	return np.sqrt(np.sum(np.power(np.abs(p1-p2),2)))
+
+def getDistanceL1(p1, p2):
+	return np.sum(np.abs(p1-p2))
 
 def getApproxNN(T, point, K):
 	S = set()
 	for t in T:
 		S = S.union(t.get(point))
 	
-	# Find the K closest in S
-	KNN = []
-	distances = []
-	for neighbour in S:
-		distance = getDistance(point, neighbour)
-		if len(KNN) < K:
-			KNN.append(neighbour)
-			distances.append(distance)
-		else:
-			maxDist = distance
-			maxDistIndex = -1
-			for i in range(0, len(distances)):
-				if distances[i] > maxDist:
-					maxDist = distances[i]
-					maxDistIndex = i
-			if maxDistIndex != -1:
-				KNN[maxDistIndex] = neighbour
-				distances[maxDistIndex] = distance
-	
-	# Sort so nearest first
-	temp = zip(distances, KNN)
-	temp.sort()
-	
-	return [x for y, x in temp]
+	return getExactNN(np.array(list(S)),point,K)
 	
 def getExactNN(P, point, K):
 	KNN = []
 	distances = []
 	for neighbour in P:
-		distance = getDistance(point, neighbour)
+		distance = getDistanceL2(point, neighbour)
 		if len(KNN) < K:
 			KNN.append(tuple(neighbour.tolist()))
 			distances.append(distance)
@@ -91,6 +68,7 @@ def figure4(P, k, B):
 	error = []
 	for l in indices:
 		print(l)
+		start = time.time()
 		T = lsh.preprocessing(P, l)
 		success = 0.0
 		#for test in range(0, tries):
@@ -101,9 +79,13 @@ def figure4(P, k, B):
 			for idx, val in enumerate(approx):
 				if val == exact[idx]:
 					success += 1.0
-					
+		
+				
 		success /= numQueryPoints * K
 		error.append(1 - success)
+		print(time.time() - start)
+
+		
 		
 	fig = plt.figure()
 	ax = fig.add_subplot(111)
