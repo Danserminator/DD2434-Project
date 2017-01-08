@@ -74,7 +74,7 @@ def figure4(P, k, B):
 	#queryPoint = P[q]
 	#P = np.delete(P, q, 0)
 	
-	K = 2
+	K = 1
 	
 	#tries = 1
 	
