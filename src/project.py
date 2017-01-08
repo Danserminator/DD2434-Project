@@ -4,8 +4,13 @@ import math
 import matplotlib.pyplot as plt
 from lsh import *
 import time
+import os
 
 dataSet = "1000histograms.asc"
+projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+k = 50
+B = 5
 
 def getDistanceL2(p1, p2):
 	return np.sqrt(np.sum(np.power(np.abs(p1-p2),2)))
@@ -132,16 +137,13 @@ def output():
 		
 # The data "has to be" stored this way 
 #P = np.array([[1], [34], [99], [2], [5], [2], [6], [8], [10], [100]])
-P = []
- 
+
 # Open and read database into P
-P = np.delete(np.genfromtxt("../data/" + dataSet,delimiter=" ") * 1000,0,1).astype(int)
+P = np.delete(np.genfromtxt(projectPath + "/data/" + dataSet,delimiter=" ") * 1000,0,1).astype(int)
 #P = np.array([[1, 2], [35, 20], [99, 1], [2, 55], [5, 5], [2, 88]])
 #P = np.array([[1,2,3], [4,5,6]])
 
 
-k = 50
-B = 5
 '''
 lsh = LSH(k, B)
 
