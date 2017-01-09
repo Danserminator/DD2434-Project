@@ -10,7 +10,7 @@ from sklearn.neighbors import NearestNeighbors
 dataSet = "ColorHistogram.asc"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-k = 50
+k = 700
 B = 5
 
 def getDistanceL2(p1, p2):
@@ -96,14 +96,17 @@ def figure4(P, k, B):
 	indices = range(1, 11)
 	error = []
 	for l in indices:
-		print(l)
+		print("Number of hash tables: " + str(l))
 		start = time.time()
 		T = lsh.preprocessing(P, l)
+		print("Preprocessing done: " + str(time.time() - start))
 		success = 0.0
 		#for test in range(0, tries):
 		for queryPoint in queryPoints:
 			approx = getApproxNN(P, T, np.array(queryPoint), K)
+			print("Approximation done: " + str(time.time() - start))
 			exact = getExactNNB(P, np.array(queryPoint), K)
+			print("Exact done: " + str(time.time() - start))
 			
 			for idx, val in enumerate(approx):
 				if val == exact[idx]:
@@ -112,7 +115,7 @@ def figure4(P, k, B):
 				
 		success /= numQueryPoints * K
 		error.append(1 - success)
-		print(time.time() - start)
+		print("Total time: " + str(time.time() - start))
 
 		
 		
