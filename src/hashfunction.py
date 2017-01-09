@@ -11,6 +11,14 @@ class Hash_Function:
 		# The bits that this hash function looks at
 		self.bitPosition = np.random.choice(self.dp, k, replace=False) #np.random.randint(0, self.dp, k)
 		
+		self.indices = [None] * k
+		self.values = [None] * k
+		for i in range(0, k):
+			# This will tell us which of the d coordinates to look at
+			self.indices[i] = self.bitPosition[i] / C
+			# This will tell the minimum size of the number to be 1
+			self.values[i] = self.bitPosition[i] % C
+		
 		# The buckets where the points are stored
 		# Hash code : point
 		self.bucket = dict()
@@ -32,12 +40,12 @@ class Hash_Function:
 		hashCode = 0	# TODO: Is this better than a string?!
 		for i in range(0, self.k):
 			# This will tell us which of the d coordinates to look at
-			index = self.bitPosition[i] / self.C
+			#index = self.bitPosition[i] / self.C
 			# This will tell the minimum size of the number to be 1
-			m = self.bitPosition[i] % self.C
+			#m = self.bitPosition[i] % self.C
 			
-			if data[index] >= m:
-				hashCode += 10 ** i
+			if data[self.indices[i]] >= self.values[i]:
+				hashCode += 2 ** i
 				
 		return hashCode
 		
