@@ -7,7 +7,7 @@ import time
 import os
 from sklearn.neighbors import NearestNeighbors
 
-dataSet = "1000histograms.asc"
+dataSet = "ColorHistogram.asc"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 k = 50
@@ -28,7 +28,7 @@ def getApproxNN(P, T, point, K):
 	
 	return getExactNNB(Ss, point, K)
 
-
+# Is this allowed?!
 def getExactNNB(P, point, K):
 	K = np.minimum(K, len(P))
 	if K > 0:
@@ -76,13 +76,14 @@ def getExactNN(P, point, K):
 def figure4(P, k, B):
 	lsh = LSH(k, B)
 	
-	numQueryPoints = 100
+	numQueryPoints = 1000
 	queryPoints = [None] * numQueryPoints
 	
-	for i in range(0, numQueryPoints):
-		randNum = np.random.randint(0, len(P))
-		queryPoints[i] = P[randNum]
-		P = np.delete(P, randNum, 0)
+	randNums = np.random.choice(len(P), numQueryPoints, replace=False)
+	for idx, randNum in enumerate(randNums):
+		queryPoints[idx] = P[randNum]
+	
+	P = np.delete(P, randNums, 0)
 	
 	#q = 3
 	#queryPoint = P[q]
