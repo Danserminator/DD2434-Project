@@ -10,7 +10,7 @@ from sklearn.neighbors import NearestNeighbors
 dataSet = "ColorHistogram.asc"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-k = 700
+k = 100
 B = 5
 
 def getDistanceL2(p1, p2):
@@ -83,7 +83,9 @@ def figure4(P, k, B):
 	for idx, randNum in enumerate(randNums):
 		queryPoints[idx] = P[randNum]
 	
-	P = np.delete(P, randNums, 0)
+	P = np.delete(P, randNums, 0)[:20000]
+	print("Size of dataset: " + str(len(P)))
+	print("Size of testset: " + str(len(queryPoints)))
 	
 	#q = 3
 	#queryPoint = P[q]
@@ -97,9 +99,9 @@ def figure4(P, k, B):
 	error = []
 	start = time.time()
 	T = lsh.preprocessing(P, maxNumberOfHashTables)
-	print("Preprocessing done: " + str(time.time() - start) + " seconds")
-	for l in range(1, maxNumberOfHashTables):
-		print("Number of hash tables: " + str(l))
+	print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
+	indices = range(1, maxNumberOfHashTables + 1)
+	for l in indices:
 		start = time.time()
 		success = 0.0
 		#for test in range(0, tries):
@@ -114,7 +116,7 @@ def figure4(P, k, B):
 			
 		success /= numQueryPoints * K
 		error.append(1 - success)
-		print("Time taken: " + str(time.time() - start) + " seconds")
+		print("Time taken when using " + str(l) + " number of hash tables: " + str(time.time() - start) + " seconds")
 
 		
 		
