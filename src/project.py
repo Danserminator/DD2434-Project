@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from lsh import *
 import time
 import os
+from sklearn.neighbors import NearestNeighbors
 
 dataSet = "1000histograms.asc"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,8 +32,19 @@ def getApproxNN(P, T, point, K):
 def getExactNNB(P, point, K):
 	K = np.minimum(K, len(P))
 	if K > 0:
-		d = list(map((lambda p: (getDistanceL2(p, point), tuple(p.tolist())) ), P))
+		nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
+		distances, indices = nbrs.kneighbors([point])
+		
+		return tuple(tuple(P[x].tolist()[0]) for x in indices)
+	
+	return []
+
+def getExactNNB2(P, point, K):
+	K = np.minimum(K, len(P))
+	if K > 0:
+		d = list(map((lambda p: (getDistanceL2(p, point), tuple(p.tolist()))), P))
 		dd = sorted(d, key=lambda dist: dist[0])
+		print(zip(*dd[:K])[1])
 		return zip(*dd[:K])[1]
 	return []
 	
