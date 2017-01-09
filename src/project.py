@@ -104,9 +104,7 @@ def figure4(P, k, B):
 		#for test in range(0, tries):
 		for queryPoint in queryPoints:
 			approx = getApproxNN(P, T, np.array(queryPoint), K)
-			print("Approximation done: " + str(time.time() - start))
 			exact = getExactNNB(P, np.array(queryPoint), K)
-			print("Exact done: " + str(time.time() - start))
 			
 			for idx, val in enumerate(approx):
 				if val == exact[idx]:
