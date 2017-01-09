@@ -96,11 +96,15 @@ def figure4(P, k, B):
 	
 	#tries = 1
 	
+	print("Building tree for exact K-NN")
+	start = time.time()
 	# Build the tree for exact K-NN here so we only have to do it ones
 	nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
+	print("Done building the tree, it took: " + str(time.time() - start) + " seconds")
 	
 	maxNumberOfHashTables = 10
 	error = []
+	print("Start preprocessing of the data")
 	start = time.time()
 	T = lsh.preprocessing(P, maxNumberOfHashTables)
 	print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
