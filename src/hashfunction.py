@@ -16,15 +16,15 @@ class Hash_Function:
 		self.bucket = dict()
 		
 	# Add a new point into a bucket
-	def add(self, point):		
+	def add(self, point, index):		
 		# Get the hash code for this point
 		hashCode = self.getHashCode(point)
 		
 		if hashCode in self.bucket:
 			# TODO: Check the maximum bucket size
-			self.bucket[hashCode].append(tuple(point.tolist()))
+			self.bucket[hashCode].append(index)
 		else:
-			self.bucket[hashCode] = [tuple(point.tolist())]
+			self.bucket[hashCode] = [index]
 			
 			
 	# Generate hash code
@@ -49,4 +49,4 @@ class Hash_Function:
 		if hashCode in self.bucket:
 			return self.bucket[hashCode]
 		else:
-			return tuple()
+			return []

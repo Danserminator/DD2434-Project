@@ -20,7 +20,7 @@ class LSH:
 		for i in range(0, l):
 			for j in range(0, len(P)):
 				# Store point p_j on bucket g_i(p_j) of hash table T_i
-				T[i].add(P[j])
+				T[i].add(P[j], j)
 			
 		return T
 		

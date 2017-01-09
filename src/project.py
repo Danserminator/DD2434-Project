@@ -13,24 +13,26 @@ k = 50
 B = 5
 
 def getDistanceL2(p1, p2):
-	return np.sqrt(np.sum(np.power(np.abs(p1-p2),2)))
+	return np.sqrt(np.sum(np.power(np.abs(p1 - p2), 2)))
 
 def getDistanceL1(p1, p2):
-	return np.sum(np.abs(p1-p2))
+	return np.sum(np.abs(p1 - p2))
 
-def getApproxNN(T, point, K):
+def getApproxNN(P, T, point, K):
 	S = set()
 	for t in T:
 		S = S.union(t.get(point))
+		
+	Ss = np.array([P[x] for x in S])
 	
-	return getExactNNB(np.array(list(S)),point,K)
+	return getExactNNB(Ss, point, K)
 
 
-def getExactNNB(P,point,K):
-	K = np.minimum(K,len(P))
+def getExactNNB(P, point, K):
+	K = np.minimum(K, len(P))
 	if K > 0:
-		d = list(map((lambda p: (getDistanceL2(p,point),tuple(p.tolist())) ), P))
-		dd = sorted(d,key=lambda dist: dist[0])
+		d = list(map((lambda p: (getDistanceL2(p, point), tuple(p.tolist())) ), P))
+		dd = sorted(d, key=lambda dist: dist[0])
 		return zip(*dd[:K])[1]
 	return []
 	
@@ -62,7 +64,7 @@ def getExactNN(P, point, K):
 def figure4(P, k, B):
 	lsh = LSH(k, B)
 	
-	numQueryPoints = 90
+	numQueryPoints = 100
 	queryPoints = [None] * numQueryPoints
 	
 	for i in range(0, numQueryPoints):
@@ -87,7 +89,7 @@ def figure4(P, k, B):
 		success = 0.0
 		#for test in range(0, tries):
 		for queryPoint in queryPoints:
-			approx = getApproxNN(T, np.array(queryPoint), K)
+			approx = getApproxNN(P, T, np.array(queryPoint), K)
 			exact = getExactNNB(P, np.array(queryPoint), K)
 			
 			for idx, val in enumerate(approx):
