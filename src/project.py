@@ -29,10 +29,11 @@ def getApproxNN(P, T, point, K):
 	return getExactNNB(Ss, point, K)
 
 # Is this allowed?!
-def getExactNNB(P, point, K):
+def getExactNNB(P, point, K, nbrs = None):
 	K = np.minimum(K, len(P))
 	if K > 0:
-		nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
+		if nbrs == None:
+			nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
 		distances, indices = nbrs.kneighbors([point])
 		
 		return tuple(tuple(P[x].tolist()[0]) for x in indices)
@@ -83,7 +84,7 @@ def figure4(P, k, B):
 	for idx, randNum in enumerate(randNums):
 		queryPoints[idx] = P[randNum]
 	
-	P = np.delete(P, randNums, 0)[:20000]
+	P = np.delete(P, randNums, 0)
 	print("Size of dataset: " + str(len(P)))
 	print("Size of testset: " + str(len(queryPoints)))
 	
@@ -94,6 +95,9 @@ def figure4(P, k, B):
 	K = 1
 	
 	#tries = 1
+	
+	# Build the tree for exact K-NN here so we only have to do it ones
+	nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
 	
 	maxNumberOfHashTables = 10
 	error = []
@@ -107,7 +111,7 @@ def figure4(P, k, B):
 		#for test in range(0, tries):
 		for queryPoint in queryPoints:
 			approx = getApproxNN(P, T[:l], np.array(queryPoint), K)
-			exact = getExactNNB(P, np.array(queryPoint), K)
+			exact = getExactNNB(P, np.array(queryPoint), K, nbrs)
 		
 			for idx, val in enumerate(approx):
 				if val == exact[idx]:
@@ -116,7 +120,7 @@ def figure4(P, k, B):
 			
 		success /= numQueryPoints * K
 		error.append(1 - success)
-		print("Time taken when using " + str(l) + " number of hash tables: " + str(time.time() - start) + " seconds")
+		print("Time taken when using " + str(l) + " hash tables: " + str(time.time() - start) + " seconds")
 
 		
 		
