@@ -13,12 +13,15 @@ class Hash_Function:
 		
 		self.indices = [None] * k
 		self.values = [None] * k
+		self.twoExp = [None] * k
 		for i in range(0, k):
 			# This will tell us which of the d coordinates to look at
 			self.indices[i] = self.bitPosition[i] / C
 			# This will tell the minimum size of the number to be 1
 			self.values[i] = self.bitPosition[i] % C
-		
+			# Calculate this now instead...
+			self.twoExp[i] = 2 ** i
+			
 		# The buckets where the points are stored
 		# Hash code : point
 		self.bucket = dict()
@@ -45,8 +48,8 @@ class Hash_Function:
 			#m = self.bitPosition[i] % self.C
 			
 			if data[self.indices[i]] >= self.values[i]:
-				hashCode += 2 ** i
-				
+				hashCode += self.twoExp[i]
+								
 		return hashCode
 		
 		
