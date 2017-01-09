@@ -93,27 +93,28 @@ def figure4(P, k, B):
 	
 	#tries = 1
 	
-	indices = range(1, 11)
+	maxNumberOfHashTables = 10
 	error = []
-	for l in indices:
+	start = time.time()
+	T = lsh.preprocessing(P, maxNumberOfHashTables)
+	print("Preprocessing done: " + str(time.time() - start) + " seconds")
+	for l in range(1, maxNumberOfHashTables):
 		print("Number of hash tables: " + str(l))
 		start = time.time()
-		T = lsh.preprocessing(P, l)
-		print("Preprocessing done: " + str(time.time() - start))
 		success = 0.0
 		#for test in range(0, tries):
 		for queryPoint in queryPoints:
-			approx = getApproxNN(P, T, np.array(queryPoint), K)
+			approx = getApproxNN(P, T[:l], np.array(queryPoint), K)
 			exact = getExactNNB(P, np.array(queryPoint), K)
-			
+		
 			for idx, val in enumerate(approx):
 				if val == exact[idx]:
 					success += 1.0
-		
-				
+	
+			
 		success /= numQueryPoints * K
 		error.append(1 - success)
-		print("Total time: " + str(time.time() - start))
+		print("Time taken: " + str(time.time() - start) + " seconds")
 
 		
 		
