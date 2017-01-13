@@ -6,12 +6,16 @@ from lsh import *
 import time
 import os
 from sklearn.neighbors import NearestNeighbors
+import sys
 
 dataSet = "ColorHistogram.asc"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 k = 100
-B = 5
+B = 25000
+numQueryPoints = 1000
+maxNumberOfHashTables = 10
+numDataPoints = sys.maxint
 
 def getDistanceL2(p1, p2):
 	return np.sqrt(np.sum(np.power(np.abs(p1 - p2), 2)))
@@ -36,7 +40,9 @@ def getExactNNB(P, point, K, nbrs = None):
 			nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
 		distances, indices = nbrs.kneighbors([point])
 		
-		return tuple(tuple(P[x].tolist()[0]) for x in indices)
+		# Return distance instead of point since multiple points can have the same distance
+		return [tuple(x) for x in distances][0]
+		#return tuple(tuple(P[x].tolist()[0]) for x in indices)
 	
 	return []
 
@@ -74,27 +80,8 @@ def getExactNN(P, point, K):
 	
 	return [x for y, x in temp]
 
-def figure4(P, k, B):
-	lsh = LSH(k, B)
-	
-	numQueryPoints = 1000
-	queryPoints = [None] * numQueryPoints
-	
-	randNums = np.random.choice(len(P), numQueryPoints, replace=False)
-	for idx, randNum in enumerate(randNums):
-		queryPoints[idx] = P[randNum]
-	
-	P = np.delete(P, randNums, 0)
-	print("Size of dataset: " + str(len(P)))
-	print("Size of testset: " + str(len(queryPoints)))
-	
-	#q = 3
-	#queryPoint = P[q]
-	#P = np.delete(P, q, 0)
-	
+def figure4(P, k, B, T):
 	K = 1
-	
-	#tries = 1
 	
 	print("Building tree for exact K-NN")
 	start = time.time()
@@ -102,13 +89,7 @@ def figure4(P, k, B):
 	nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
 	print("Done building the tree, it took: " + str(time.time() - start) + " seconds")
 	
-	maxNumberOfHashTables = 10
-	error = []
-	print("Start preprocessing of the data")
-	start = time.time()
-	T = lsh.preprocessing(P, maxNumberOfHashTables)
-	print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
-	indices = range(1, maxNumberOfHashTables + 1)
+	indices = range(1, len(T) + 1)
 	for l in indices:
 		start = time.time()
 		success = 0.0
@@ -138,6 +119,9 @@ def figure4(P, k, B):
 	ax.axis([0, indices[-1] + 1, 0, max(error) + 0.1])
 	plt.show()
 		
+
+def figure9():
+	pass
 		
 def output():
 	# Just for output
@@ -170,23 +154,27 @@ def output():
 	print("Get " + str(K) + " nearest neighbors to " + str(queryPoint) + ":")
 	print("\t" + str(getExactNN(P, np.array(queryPoint), K)))
 	
-		
-# The data "has to be" stored this way 
-#P = np.array([[1], [34], [99], [2], [5], [2], [6], [8], [10], [100]])
-
 # Open and read database into P
-P = np.delete(np.genfromtxt(projectPath + "/data/" + dataSet,delimiter=" ") * 1000,0,1).astype(int)
-#P = np.array([[1, 2], [35, 20], [99, 1], [2, 55], [5, 5], [2, 88]])
-#P = np.array([[1,2,3], [4,5,6]])
+P = np.delete(np.genfromtxt(projectPath + "/data/" + dataSet,delimiter=" ") * 100000,0,1).astype(int)
 
-
-'''
 lsh = LSH(k, B)
+	
+queryPoints = [None] * numQueryPoints
 
-l = 1	# Number of indices
+randNums = np.random.choice(len(P), numQueryPoints, replace=False)
+for idx, randNum in enumerate(randNums):
+	queryPoints[idx] = P[randNum]
 
-T = lsh.preprocessing(P, l)
-'''
+P = np.delete(P, randNums, 0)[:numDataPoints]
+print("Size of data set: " + str(len(P)))
+print("Size of test set: " + str(len(queryPoints)))
+
+error = []
+print("Start preprocessing of the data")
+start = time.time()
+T = lsh.preprocessing(P, maxNumberOfHashTables)
+print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
+	
 #output()
 
-figure4(P, k, B)
+figure4(P, k, B, T)
