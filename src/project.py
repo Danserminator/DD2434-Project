@@ -13,12 +13,12 @@ dataSet = "ColorHistogram.asc"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # All the variables basically...
-k = 100							# How many bits to use for hashing
-B = 25000						# Not used
+k = 65							# How many bits to use for hashing
+B = 300							# Not used
 numQueryPoints = 500			# Number of query points
 readQueryIndicesFromFile = True
 maxNumberOfHashTables = 10		# Number of hash tables to use
-numDataPoints = 19000			# sys.maxint for all
+numDataPoints = 5000			# sys.maxint for all
 dataMultiplier = 100000			# How much to multiple to original data
 K = 1							# Number of neighbours to find
 d = 32							# Number of dimensions (sys.maxint for all)
@@ -94,6 +94,7 @@ def figure4(P, k, B, T):
 	print("Done building the tree, it took: " + str(time.time() - start) + " seconds")
 	
 	error = []
+	missRatio = []
 	indices = range(1, len(T) + 1)
 	for l in indices:
 		start = time.time()
@@ -113,6 +114,7 @@ def figure4(P, k, B, T):
 		error_l = sum(error_l) / float(len(error_l))
 		error_l /= float(numQueryPoints)
 		error.append(round(error_l, 3))
+		missRatio.append(round(numMisses / float(numQueryPoints), 3))
 		print("Time taken when using " + str(l) + " hash tables: " + str(time.time() - start) + " seconds")
 
 	# Write to file
@@ -144,12 +146,17 @@ def figure4(P, k, B, T):
 		f.write("]\n\n")
 		
 		f.write("# Miss ration\n")
-		f.write("Miss ration = " + str(numMisses) + " / " + str(numQueryPoints) + " = " + str(numMisses / float(numQueryPoints)) + "\n\n")
+		f.write("Miss ration = [")
+		for i, v in enumerate(missRatio):
+			f.write(str(v))
+			if i != len(missRatio) - 1:
+				f.write(", ")
+		f.write("]\n\n")
 		
 	# Plot figure
 	fig = plt.figure()
 	ax = fig.add_subplot(111)
-	ax.set_title("Alpha=., n=" + str(len(P)) + ", d=" + str(P.shape[-1]) + ", k=" + str(k))
+	ax.set_title("n=" + str(len(P)) + ", d=" + str(P.shape[-1]) + ", k=" + str(k))
 	ax.set_xlabel("Number of indices")
 	ax.set_ylabel("Error")
 	ax.plot(indices, error, 'r-')
@@ -222,7 +229,6 @@ print("Start preprocessing of the data")
 start = time.time()
 T = lsh.preprocessing(P, maxNumberOfHashTables)
 print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
-	
-#output()
 
+#output()
 figure4(P, k, B, T)
