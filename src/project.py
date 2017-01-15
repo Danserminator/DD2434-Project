@@ -7,15 +7,22 @@ import time
 import os
 from sklearn.neighbors import NearestNeighbors
 import sys
+import pickle	# Writing and reading files
 
 dataSet = "ColorHistogram.asc"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-k = 100
-B = 25000
-numQueryPoints = 1000
-maxNumberOfHashTables = 10
-numDataPoints = sys.maxint
+# All the variables basically...
+k = 100							# How many bits to use for hashing
+B = 300							# Maximum number of points in a bucket
+numQueryPoints = 500			# Number of query points
+readQueryIndicesFromFile = True
+maxNumberOfHashTables = 10		# Number of hash tables to use
+numDataPoints = 19000			# sys.maxint for all
+dataMultiplier = 10000			# How much to multiple to original data
+K = 10							# Number of neighbours to find
+d = 32							# Number of dimensions (sys.maxint for all)
+tries = 5						# How many times it should be done
 
 def getDistanceL2(p1, p2):
 	return np.sqrt(np.sum(np.power(np.abs(p1 - p2), 2)))
@@ -39,7 +46,6 @@ def getExactNNB(P, point, K, nbrs = None):
 		if nbrs == None:
 			nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
 		distances, indices = nbrs.kneighbors([point])
-		
 		# Return distance instead of point since multiple points can have the same distance
 		return [tuple(x) for x in distances][0]
 		#return tuple(tuple(P[x].tolist()[0]) for x in indices)
@@ -80,47 +86,98 @@ def getExactNN(P, point, K):
 	
 	return [x for y, x in temp]
 
-def figure4(P, k, B, T):
-	K = 1
-	
+def figure4(P, k, B):
 	print("Building tree for exact K-NN")
 	start = time.time()
 	# Build the tree for exact K-NN here so we only have to do it ones
 	nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
 	print("Done building the tree, it took: " + str(time.time() - start) + " seconds")
 	
-	indices = range(1, len(T) + 1)
-	for l in indices:
+	error = [0.0] * maxNumberOfHashTables
+	missRatio = [0.0] * maxNumberOfHashTables
+	indices = range(1, maxNumberOfHashTables + 1)
+	for i in range(0, tries):
+		print("Start preprocessing of the data for the " + str(i+1) + " time")
 		start = time.time()
-		success = 0.0
-		#for test in range(0, tries):
-		for queryPoint in queryPoints:
-			approx = getApproxNN(P, T[:l], np.array(queryPoint), K)
-			exact = getExactNNB(P, np.array(queryPoint), K, nbrs)
+		T = lsh.preprocessing(P, maxNumberOfHashTables)
+		print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
 		
-			for idx, val in enumerate(approx):
-				if val == exact[idx]:
-					success += 1.0
-	
+		for l in indices:
+			start = time.time()
+			error_l = [0.0] * K
+			numMisses = 0
+			#for test in range(0, tries):
+			for queryPoint in queryPoints:
+				approx = getApproxNN(P, T[:l], np.array(queryPoint), K)
+				exact = getExactNNB(P, np.array(queryPoint), K, nbrs)
+		
+				for idx, val in enumerate(approx):
+					if exact[idx] > 0 :
+						error_l[idx] += (val / float(exact[idx])) - 1	# They forgot to write -1?
 			
-		success /= numQueryPoints * K
-		error.append(1 - success)
-		print("Time taken when using " + str(l) + " hash tables: " + str(time.time() - start) + " seconds")
+				if len(approx) < K:
+					numMisses += K - len(approx)
+	
+			error_l = sum(error_l) / float(len(error_l))
+			error_l /= float(numQueryPoints)
+			error[l-1] += error_l
+			
+			missRatio[l-1] += numMisses / (float(numQueryPoints) * K)
+			
+			print("Time taken when using " + str(l) + " hash tables: " + str(time.time() - start) + " seconds")
+			
+	for i in range(0, len(error)):
+		error[i] = round(error[i] / float(tries), 2)
+		missRatio[i] = round(missRatio[i] / float(tries), 3)
 
+	# Write to file
+	with open(projectPath + "/data/figure4.txt", "a") as f:
+		f.write("--------------------\n")
+		f.write("k = " + str(k) + "\n")
+		f.write("d = " + str(P.shape[-1]) + "\n")
+		f.write("dataMultiplier = " + str(dataMultiplier) + "\t# How much to multiple to original data\n")
+		f.write("numQueryPoints = " + str(numQueryPoints) + "\t# n\n")
+		f.write("maxNumberOfHashTables = " + str(maxNumberOfHashTables) + "\n")
+		f.write("numDataPoints = " + str(numDataPoints) + "\n")
+		f.write("readQueryIndicesFromFile = " + str(readQueryIndicesFromFile) + "\n")
+		f.write("K = " + str(K) + "\n\n")
 		
+		f.write("# Number of hash tables\n")
+		f.write("x = [")
+		for i, v in enumerate(indices):
+			f.write(str(v))
+			if i != len(indices) - 1:
+				f.write(", ")
+		f.write("]\n\n")
 		
+		f.write("# Error\n")
+		f.write("y = [")
+		for i, v in enumerate(error):
+			f.write(str(v))
+			if i != len(error) - 1:
+				f.write(", ")
+		f.write("]\n\n")
+		
+		f.write("# Miss ratio\n")
+		f.write("Miss ratio = [")
+		for i, v in enumerate(missRatio):
+			f.write(str(v))
+			if i != len(missRatio) - 1:
+				f.write(", ")
+		f.write("]\n\n")
+		
+	# Plot figure
 	fig = plt.figure()
 	ax = fig.add_subplot(111)
-	ax.set_title("Alpha=., n=" + str(len(P)) + ", d=" + str(P.shape[-1]) + ", k=" + str(k))
+	ax.set_title("n=" + str(len(P)) + ", d=" + str(P.shape[-1]) + ", k=" + str(k))
 	ax.set_xlabel("Number of indices")
 	ax.set_ylabel("Error")
 	ax.plot(indices, error, 'r-')
 	ax.plot(indices, error, 'bs')
 	ax.axis([0, indices[-1] + 1, 0, max(error) + 0.1])
 	plt.show()
-		
 
-def figure9():
+def figure6():
 	pass
 		
 def output():
@@ -155,26 +212,31 @@ def output():
 	print("\t" + str(getExactNN(P, np.array(queryPoint), K)))
 	
 # Open and read database into P
-P = np.delete(np.genfromtxt(projectPath + "/data/" + dataSet,delimiter=" ") * 100000,0,1).astype(int)
+P = np.delete(np.genfromtxt(projectPath + "/data/" + dataSet,delimiter=" ") * dataMultiplier,0,1).astype(int)
 
 lsh = LSH(k, B)
 	
 queryPoints = [None] * numQueryPoints
 
-randNums = np.random.choice(len(P), numQueryPoints, replace=False)
-for idx, randNum in enumerate(randNums):
-	queryPoints[idx] = P[randNum]
+if readQueryIndicesFromFile:
+	with open(projectPath + "/data/queryIndices.txt", "rb") as f:
+		randNums = pickle.load(f)[:numQueryPoints]
+else:
+	randNums = np.random.choice(len(P), numQueryPoints, replace=False)
+	# Write these to file
+	with open(projectPath + "/data/queryIndices.txt", "wb") as f:
+		pickle.dump(randNums, f)
+	
+if numQueryPoints > len(randNums):
+	print("Not enough points for the number of query points specified")
+	sys.exit(1)
 
-P = np.delete(P, randNums, 0)[:numDataPoints]
+for idx, randNum in enumerate(randNums):
+	queryPoints[idx] = P[randNum][:d]
+
+P = np.delete(P, randNums, 0)[:numDataPoints, :d]
 print("Size of data set: " + str(len(P)))
 print("Size of test set: " + str(len(queryPoints)))
 
-error = []
-print("Start preprocessing of the data")
-start = time.time()
-T = lsh.preprocessing(P, maxNumberOfHashTables)
-print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
-	
 #output()
-
-figure4(P, k, B, T)
+figure4(P, k, B)

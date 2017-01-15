@@ -1,0 +1,95 @@
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.25, 0.14, 0.06, 0.03, 0.02, 0.01, 0.01, 0.0, 0.0, 0.0]
+
+# Miss ration
+Miss ration = [0.134, 0.026, 0.006, 0.003, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 2000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.21, 0.09, 0.05, 0.03, 0.01, 0.01, 0.01, 0.0, 0.0, 0.0]
+
+# Miss ration
+Miss ration = [0.053, 0.007, 0.002, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 5000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.26, 0.12, 0.06, 0.03, 0.02, 0.02, 0.01, 0.01, 0.01, 0.0]
+
+# Miss ration
+Miss ration = [0.048, 0.004, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 10000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.33, 0.16, 0.09, 0.05, 0.03, 0.02, 0.02, 0.01, 0.01, 0.01]
+
+# Miss ration
+Miss ration = [0.024, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 19000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.39, 0.18, 0.1, 0.06, 0.04, 0.03, 0.02, 0.02, 0.01, 0.01]
+
+# Miss ration
+Miss ration = [0.008, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
