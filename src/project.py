@@ -147,7 +147,6 @@ def figure4(P, k, B, T):
 		f.write("Miss ration = " + str(numMisses) + " / " + str(numQueryPoints) + " = " + str(numMisses / float(numQueryPoints)) + "\n\n")
 		
 	# Plot figure
-	'''
 	fig = plt.figure()
 	ax = fig.add_subplot(111)
 	ax.set_title("Alpha=., n=" + str(len(P)) + ", d=" + str(P.shape[-1]) + ", k=" + str(k))
@@ -157,7 +156,6 @@ def figure4(P, k, B, T):
 	ax.plot(indices, error, 'bs')
 	ax.axis([0, indices[-1] + 1, 0, max(error) + 0.1])
 	plt.show()
-	'''
 
 def figure6():
 	pass
