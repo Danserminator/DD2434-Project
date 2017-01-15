@@ -10,7 +10,7 @@ class Hash_Function:
 		self.dp = C * d
 		
 		# The bits that this hash function looks at
-		self.bitPosition = np.random.choice(self.dp, k, replace=False) #np.random.randint(0, self.dp, k)
+		self.bitPosition = np.random.choice(self.dp, k, replace=True) #np.random.randint(0, self.dp, k)
 		
 		'''
 		self.stuff = [None] * d
@@ -37,7 +37,6 @@ class Hash_Function:
 			self.values[i] = self.bitPosition[i] % C
 			# Calculate this now instead...
 			self.twoExp[i] = 2 ** i
-		
 		
 		# The buckets where the points are stored
 		# Hash code : point
