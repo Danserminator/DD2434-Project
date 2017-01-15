@@ -18,11 +18,11 @@ B = 300							# Maximum number of points in a bucket
 numQueryPoints = 500			# Number of query points
 readQueryIndicesFromFile = True
 maxNumberOfHashTables = 10		# Number of hash tables to use
-numDataPoints = 1000			# sys.maxint for all
+numDataPoints = 19000			# sys.maxint for all
 dataMultiplier = 10000			# How much to multiple to original data
 K = 10							# Number of neighbours to find
 d = 32							# Number of dimensions (sys.maxint for all)
-tries = 10						# How many times it should be done
+tries = 5						# How many times it should be done
 
 def getDistanceL2(p1, p2):
 	return np.sqrt(np.sum(np.power(np.abs(p1 - p2), 2)))
@@ -46,7 +46,6 @@ def getExactNNB(P, point, K, nbrs = None):
 		if nbrs == None:
 			nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
 		distances, indices = nbrs.kneighbors([point])
-		
 		# Return distance instead of point since multiple points can have the same distance
 		return [tuple(x) for x in distances][0]
 		#return tuple(tuple(P[x].tolist()[0]) for x in indices)
@@ -113,15 +112,18 @@ def figure4(P, k, B):
 				exact = getExactNNB(P, np.array(queryPoint), K, nbrs)
 		
 				for idx, val in enumerate(approx):
-					error_l[idx] += (val / float(exact[idx])) - 1	# They forgot to write -1?
+					if exact[idx] > 0 :
+						error_l[idx] += (val / float(exact[idx])) - 1	# They forgot to write -1?
 			
 				if len(approx) < K:
-					numMisses += 1
+					numMisses += K - len(approx)
 	
 			error_l = sum(error_l) / float(len(error_l))
 			error_l /= float(numQueryPoints)
 			error[l-1] += error_l
-			missRatio[l-1] += numMisses / float(numQueryPoints)
+			
+			missRatio[l-1] += numMisses / (float(numQueryPoints) * K)
+			
 			print("Time taken when using " + str(l) + " hash tables: " + str(time.time() - start) + " seconds")
 			
 	for i in range(0, len(error)):
