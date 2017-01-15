@@ -13,8 +13,8 @@ dataSet = "ColorHistogram.asc"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # All the variables basically...
-k = 65							# How many bits to use for hashing
-B = 300							# Not used
+k = 100							# How many bits to use for hashing
+B = 300							# Maximum number of points in a bucket
 numQueryPoints = 500			# Number of query points
 readQueryIndicesFromFile = True
 maxNumberOfHashTables = 10		# Number of hash tables to use
@@ -156,8 +156,8 @@ def figure4(P, k, B):
 				f.write(", ")
 		f.write("]\n\n")
 		
-		f.write("# Miss ration\n")
-		f.write("Miss ration = [")
+		f.write("# Miss ratio\n")
+		f.write("Miss ratio = [")
 		for i, v in enumerate(missRatio):
 			f.write(str(v))
 			if i != len(missRatio) - 1:
