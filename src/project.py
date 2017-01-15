@@ -18,10 +18,11 @@ B = 300							# Not used
 numQueryPoints = 500			# Number of query points
 readQueryIndicesFromFile = True
 maxNumberOfHashTables = 10		# Number of hash tables to use
-numDataPoints = 5000			# sys.maxint for all
-dataMultiplier = 100000			# How much to multiple to original data
-K = 1							# Number of neighbours to find
+numDataPoints = 1000			# sys.maxint for all
+dataMultiplier = 10000			# How much to multiple to original data
+K = 10							# Number of neighbours to find
 d = 32							# Number of dimensions (sys.maxint for all)
+tries = 10						# How many times it should be done
 
 def getDistanceL2(p1, p2):
 	return np.sqrt(np.sum(np.power(np.abs(p1 - p2), 2)))
@@ -86,36 +87,46 @@ def getExactNN(P, point, K):
 	
 	return [x for y, x in temp]
 
-def figure4(P, k, B, T):
+def figure4(P, k, B):
 	print("Building tree for exact K-NN")
 	start = time.time()
 	# Build the tree for exact K-NN here so we only have to do it ones
 	nbrs = NearestNeighbors(n_neighbors = K, algorithm = 'ball_tree').fit(P)
 	print("Done building the tree, it took: " + str(time.time() - start) + " seconds")
 	
-	error = []
-	missRatio = []
-	indices = range(1, len(T) + 1)
-	for l in indices:
+	error = [0.0] * maxNumberOfHashTables
+	missRatio = [0.0] * maxNumberOfHashTables
+	indices = range(1, maxNumberOfHashTables + 1)
+	for i in range(0, tries):
+		print("Start preprocessing of the data for the " + str(i+1) + " time")
 		start = time.time()
-		error_l = [0.0] * K
-		numMisses = 0
-		#for test in range(0, tries):
-		for queryPoint in queryPoints:
-			approx = getApproxNN(P, T[:l], np.array(queryPoint), K)
-			exact = getExactNNB(P, np.array(queryPoint), K, nbrs)
+		T = lsh.preprocessing(P, maxNumberOfHashTables)
+		print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
 		
-			for idx, val in enumerate(approx):
-				error_l[idx] += (val / float(exact[idx])) - 1	# They forgot to write -1?
+		for l in indices:
+			start = time.time()
+			error_l = [0.0] * K
+			numMisses = 0
+			#for test in range(0, tries):
+			for queryPoint in queryPoints:
+				approx = getApproxNN(P, T[:l], np.array(queryPoint), K)
+				exact = getExactNNB(P, np.array(queryPoint), K, nbrs)
+		
+				for idx, val in enumerate(approx):
+					error_l[idx] += (val / float(exact[idx])) - 1	# They forgot to write -1?
 			
-			if len(approx) < K:
-				numMisses += 1
+				if len(approx) < K:
+					numMisses += 1
 	
-		error_l = sum(error_l) / float(len(error_l))
-		error_l /= float(numQueryPoints)
-		error.append(round(error_l, 3))
-		missRatio.append(round(numMisses / float(numQueryPoints), 3))
-		print("Time taken when using " + str(l) + " hash tables: " + str(time.time() - start) + " seconds")
+			error_l = sum(error_l) / float(len(error_l))
+			error_l /= float(numQueryPoints)
+			error[l-1] += error_l
+			missRatio[l-1] += numMisses / float(numQueryPoints)
+			print("Time taken when using " + str(l) + " hash tables: " + str(time.time() - start) + " seconds")
+			
+	for i in range(0, len(error)):
+		error[i] = round(error[i] / float(tries), 2)
+		missRatio[i] = round(missRatio[i] / float(tries), 3)
 
 	# Write to file
 	with open(projectPath + "/data/figure4.txt", "a") as f:
@@ -225,10 +236,5 @@ P = np.delete(P, randNums, 0)[:numDataPoints, :d]
 print("Size of data set: " + str(len(P)))
 print("Size of test set: " + str(len(queryPoints)))
 
-print("Start preprocessing of the data")
-start = time.time()
-T = lsh.preprocessing(P, maxNumberOfHashTables)
-print("Preprocessing done, created " + str(maxNumberOfHashTables) + " hash tables in " + str(time.time() - start) + " seconds")
-
 #output()
-figure4(P, k, B, T)
+figure4(P, k, B)
