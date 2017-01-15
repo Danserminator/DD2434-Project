@@ -1,0 +1,97 @@
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.23, 0.17, 0.11, 0.07, 0.06, 0.04, 0.02, 0.02, 0.01, 0.01]
+
+# Miss ration
+Miss ration = [0.441, 0.157, 0.061, 0.031, 0.019, 0.01, 0.005, 0.003, 0.003, 0.001]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 2000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.29, 0.18, 0.09, 0.06, 0.03, 0.02, 0.01, 0.01, 0.01, 0.01]
+
+# Miss ration
+Miss ration = [0.297, 0.079, 0.024, 0.013, 0.005, 0.004, 0.002, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 5000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.28, 0.16, 0.09, 0.05, 0.04, 0.03, 0.02, 0.01, 0.01, 0.01]
+
+# Miss ration
+Miss ration = [0.196, 0.032, 0.009, 0.003, 0.001, 0.001, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 10000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.36, 0.19, 0.12, 0.07, 0.05, 0.04, 0.03, 0.02, 0.02, 0.01]
+
+# Miss ration
+Miss ration = [0.104, 0.012, 0.003, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 19000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.36, 0.21, 0.12, 0.08, 0.06, 0.05, 0.04, 0.03, 0.03, 0.02]
+
+# Miss ration
+Miss ration = [0.108, 0.009, 0.002, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+
+
