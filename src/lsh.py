@@ -25,7 +25,8 @@ class LSH:
 		
 	# Get the largest element in the data
 	def getLargest(self, data):
-		return np.amax(data)
+		return np.ceil(np.amax(data)).astype(int)
+		# return np.amax(data)
 		
 	# Get the dimesion of the data
 	def getDimension(self, data):

@@ -8,22 +8,43 @@ import os
 from sklearn.neighbors import NearestNeighbors
 import sys
 import pickle	# Writing and reading files
+import pandas as pd
 
-dataSet = "ColorHistogram.asc"
-
+# dataSet = "ColorHistogram.asc"
+dataSet = "tabledata.dat"
 projectPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # All the variables basically...
-k = 100							# How many bits to use for hashing
-B = 300							# Maximum number of points in a bucket
+k = 65            # How many bits to use for hashing
+# k = 100
+# k = 700
+
+# B = 100							# Maximum number of points in a bucket
+# B = 300							# Maximum number of points in a bucket
+B = 25000							# Maximum number of points in a bucket
 numQueryPoints = 500			# Number of query points
+# numQueryPoints = 1000			# Number of query points
 readQueryIndicesFromFile = True
 maxNumberOfHashTables = 10		# Number of hash tables to use
-numDataPoints = 19000			# sys.maxint for all
-dataMultiplier = 10000			# How much to multiple to original data
+
+# numDataPoints = 1000			# sys.maxint for all
+# numDataPoints = 2000			# sys.maxint for all
+# numDataPoints = 5000			# sys.maxint for all
+# numDataPoints = 10000			# sys.maxint for all
+# numDataPoints = 19000			# sys.maxint for all
+# numDataPoints = 27000			# sys.maxint for all
+numDataPoints = sys.maxint			# sys.maxint for all
+
+# numDataPoints = sys.maxint
+# dataMultiplier = 10000			# How much to multiple to original data
+dataMultiplier = 100000			# How much to multiple to original data
+
+# K = 1							# Number of neighbours to find
 K = 10							# Number of neighbours to find
-d = 32							# Number of dimensions (sys.maxint for all)
+# d = 32							# Number of dimensions (sys.maxint for all)
+d = sys.maxint				# Number of dimensions (sys.maxint for all)
 tries = 5						# How many times it should be done
+
 
 def getDistanceL2(p1, p2):
 	return np.sqrt(np.sum(np.power(np.abs(p1 - p2), 2)))
@@ -213,7 +234,24 @@ def output():
 	print("\t" + str(getExactNN(P, np.array(queryPoint), K)))
 	
 # Open and read database into P
-P = np.delete(np.genfromtxt(projectPath + "/data/" + dataSet,delimiter=" ") * dataMultiplier,0,1).astype(int)
+
+
+
+
+# P2 = df.as_matrix() * 1000000
+# P2 = df.as_matrix()
+
+# print(P2.__class__)
+# print(P2.shape)
+
+# print(P2[0:5, 0:5])
+# print(P2.head())
+# P = np.delete(np.genfromtxt(projectPath + "/data/" + dataSet,delimiter=" ") * dataMultiplier,0,1).astype(int)
+datasetFullPath = projectPath + "/data/" + dataSet
+df = pd.read_csv(datasetFullPath)
+df = df.ix[:, 2:62]
+P = df.as_matrix() * dataMultiplier
+
 
 lsh = LSH(k, B)
 	

@@ -17,3 +17,459 @@ y = [0.273, 0.084, 0.061, 0.033, 0.011, 0.008, 0.007, 0.003, 0.002, 0.002]
 # Miss ration
 Miss ration = 0 / 500 = 0.0
 
+--------------------
+k = 100
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 19000
+readQueryIndicesFromFile = False
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.24, 0.14, 0.11, 0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.03]
+
+# Miss ratio
+Miss ratio = [0.156, 0.078, 0.049, 0.038, 0.032, 0.025, 0.02, 0.018, 0.012, 0.011]
+
+--------------------
+k = 65
+d = 32
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 1000	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = False
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.03, 0.07, 0.08, 0.09, 0.1, 0.1, 0.09, 0.09, 0.09, 0.08]
+
+# Miss ratio
+Miss ratio = [0.863, 0.718, 0.676, 0.58, 0.503, 0.459, 0.427, 0.403, 0.375, 0.342]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 1000	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = False
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.07, 0.1, 0.11, 0.12, 0.12, 0.11, 0.11, 0.1, 0.1, 0.09]
+
+# Miss ratio
+Miss ratio = [0.708, 0.565, 0.516, 0.447, 0.39, 0.361, 0.312, 0.284, 0.264, 0.257]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 1000	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = False
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.13, 0.14, 0.13, 0.14, 0.11, 0.09, 0.09, 0.08, 0.07, 0.06]
+
+# Miss ratio
+Miss ratio = [0.587, 0.453, 0.353, 0.304, 0.279, 0.24, 0.215, 0.191, 0.186, 0.178]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 1000	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = False
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.08, 0.12, 0.11, 0.12, 0.11, 0.12, 0.12, 0.11, 0.1, 0.1]
+
+# Miss ratio
+Miss ratio = [0.778, 0.595, 0.53, 0.479, 0.436, 0.339, 0.308, 0.276, 0.26, 0.25]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = False
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.05, 0.08, 0.09, 0.1, 0.1, 0.1, 0.1, 0.1, 0.09, 0.08]
+
+# Miss ratio
+Miss ratio = [0.779, 0.642, 0.549, 0.492, 0.45, 0.435, 0.326, 0.32, 0.289, 0.278]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = False
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.11, 0.15, 0.14, 0.14, 0.13, 0.12, 0.1, 0.1, 0.1, 0.08]
+
+# Miss ratio
+Miss ratio = [0.57, 0.38, 0.292, 0.236, 0.219, 0.195, 0.176, 0.158, 0.138, 0.124]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = False
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.16, 0.15, 0.12, 0.11, 0.09, 0.07, 0.06, 0.05, 0.05, 0.05]
+
+# Miss ratio
+Miss ratio = [0.541, 0.364, 0.306, 0.257, 0.234, 0.205, 0.174, 0.164, 0.162, 0.145]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = False
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.06, 0.08, 0.09, 0.1, 0.1, 0.1, 0.1, 0.1, 0.09, 0.09]
+
+# Miss ratio
+Miss ratio = [0.782, 0.68, 0.577, 0.509, 0.481, 0.462, 0.433, 0.394, 0.36, 0.332]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.04, 0.09, 0.12, 0.11, 0.12, 0.11, 0.1, 0.1, 0.09, 0.08]
+
+# Miss ratio
+Miss ratio = [0.853, 0.683, 0.521, 0.451, 0.381, 0.367, 0.335, 0.302, 0.279, 0.266]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 10000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.08, 0.08, 0.09, 0.09, 0.09, 0.09, 0.09, 0.08, 0.08, 0.07]
+
+# Miss ratio
+Miss ratio = [0.726, 0.689, 0.543, 0.465, 0.371, 0.328, 0.304, 0.272, 0.255, 0.241]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.1, 0.12, 0.12, 0.13, 0.09, 0.08, 0.07, 0.07, 0.06, 0.05]
+
+# Miss ratio
+Miss ratio = [0.676, 0.551, 0.407, 0.319, 0.246, 0.21, 0.189, 0.175, 0.144, 0.134]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 2000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.12, 0.08, 0.06, 0.05, 0.04, 0.03, 0.02, 0.02, 0.01, 0.01]
+
+# Miss ratio
+Miss ratio = [0.303, 0.207, 0.177, 0.166, 0.157, 0.149, 0.147, 0.147, 0.146, 0.136]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 2000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.13, 0.11, 0.09, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02, 0.02]
+
+# Miss ratio
+Miss ratio = [0.527, 0.366, 0.247, 0.217, 0.197, 0.183, 0.169, 0.166, 0.157, 0.13]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 5000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.12, 0.07, 0.05, 0.04, 0.03, 0.02, 0.02, 0.01, 0.01, 0.01]
+
+# Miss ratio
+Miss ratio = [0.261, 0.183, 0.162, 0.152, 0.149, 0.138, 0.138, 0.136, 0.134, 0.134]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 5000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.16, 0.1, 0.06, 0.05, 0.04, 0.03, 0.02, 0.02, 0.02, 0.02]
+
+# Miss ratio
+Miss ratio = [0.296, 0.216, 0.181, 0.172, 0.16, 0.16, 0.156, 0.155, 0.149, 0.148]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 1000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.1, 0.11, 0.12, 0.11, 0.1, 0.1, 0.1, 0.1, 0.09, 0.09]
+
+# Miss ratio
+Miss ratio = [0.679, 0.55, 0.488, 0.384, 0.356, 0.333, 0.32, 0.292, 0.283, 0.269]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 10000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.15, 0.08, 0.05, 0.04, 0.03, 0.02, 0.02, 0.02, 0.01, 0.01]
+
+# Miss ratio
+Miss ratio = [0.056, 0.017, 0.013, 0.007, 0.006, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 10000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.24, 0.12, 0.08, 0.06, 0.05, 0.04, 0.03, 0.03, 0.02, 0.02]
+
+# Miss ratio
+Miss ratio = [0.112, 0.054, 0.035, 0.031, 0.027, 0.025, 0.025, 0.024, 0.024, 0.024]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 19000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.18, 0.09, 0.07, 0.05, 0.04, 0.03, 0.02, 0.02, 0.02, 0.01]
+
+# Miss ratio
+Miss ratio = [0.019, 0.004, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 19000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.26, 0.13, 0.1, 0.07, 0.05, 0.04, 0.04, 0.03, 0.03, 0.02]
+
+# Miss ratio
+Miss ratio = [0.044, 0.01, 0.004, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 27000
+readQueryIndicesFromFile = True
+K = 1
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.18, 0.11, 0.08, 0.06, 0.05, 0.04, 0.03, 0.03, 0.02, 0.02]
+
+# Miss ratio
+Miss ratio = [0.014, 0.003, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 27000
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.24, 0.14, 0.09, 0.07, 0.06, 0.05, 0.04, 0.04, 0.03, 0.03]
+
+# Miss ratio
+Miss ratio = [0.037, 0.01, 0.004, 0.001, 0.001, 0.001, 0.001, 0.0, 0.0, 0.0]
+
+--------------------
+k = 65
+d = 60
+dataMultiplier = 100000	# How much to multiple to original data
+numQueryPoints = 500	# n
+maxNumberOfHashTables = 10
+numDataPoints = 2147483647
+readQueryIndicesFromFile = True
+K = 10
+
+# Number of hash tables
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Error
+y = [0.09, 0.04, 0.03, 0.02, 0.01, 0.01, 0.01, 0.01, 0.0, 0.0]
+
+# Miss ratio
+Miss ratio = [0.036, 0.006, 0.002, 0.001, 0.001, 0.001, 0.0, 0.0, 0.0, 0.0]
+
